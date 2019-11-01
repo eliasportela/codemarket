@@ -1,46 +1,37 @@
-package br.com.codebit.codemarket.Entitys;
+package br.com.codebit.codemarket.dtos;
 
-import br.com.codebit.codemarket.Entitys.enums.Profile;
+import br.com.codebit.codemarket.entitys.enums.Profile;
+import br.com.codebit.codemarket.services.validations.UserEmail;
 
-import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Entity
-public class User implements Serializable {
+public class UserDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "Campo obrigatório")
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @NotEmpty(message = "Campo obrigatório")
+    @Email(message = "Email inválido")
+    @UserEmail
     private String email;
 
-    @Column(nullable = false)
+    @Pattern(regexp = "^(\\S{6,})?$", message = "A senha deve ter no mínimo 6 caracteres")
     private String password;
 
-    @Column(columnDefinition = "boolean default true")
+    @NotNull(message = "Campo obrigatório")
     private Boolean enabled;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "PROFILE")
-    private Set<Integer> profile = new HashSet<>();
-
-    public User() {
-        addProfile(Profile.CLIENTE);
-    }
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
+    @NotNull(message = "Campo obrigatório")
+    private Set<Profile> profile = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -82,19 +73,19 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public Set<Profile> getProfiles() {
-        return profile.stream().map(Profile::toEnum).collect(Collectors.toSet());
+    public Set<Profile> getProfile() {
+        return profile;
     }
 
-    public void addProfile(Profile profile) {
-        this.profile.add(profile.getCod());
+    public void setProfile(Set<Profile> profile) {
+        this.profile = profile;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserDTO user = (UserDTO) o;
         return Objects.equals(id, user.id);
     }
 

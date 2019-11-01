@@ -1,4 +1,4 @@
-package br.com.codebit.codemarket.Entitys.enums;
+package br.com.codebit.codemarket.entitys.enums;
 
 public enum TypeItemTransaction {
 

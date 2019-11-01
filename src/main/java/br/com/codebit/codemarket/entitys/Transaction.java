@@ -1,6 +1,6 @@
-package br.com.codebit.codemarket.Entitys;
+package br.com.codebit.codemarket.entitys;
 
-import br.com.codebit.codemarket.Entitys.enums.StatusTransaction;
+import br.com.codebit.codemarket.entitys.enums.StatusTransaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

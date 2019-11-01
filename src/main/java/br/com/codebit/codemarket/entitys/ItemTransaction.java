@@ -1,7 +1,7 @@
-package br.com.codebit.codemarket.Entitys;
+package br.com.codebit.codemarket.entitys;
 
-import br.com.codebit.codemarket.Entitys.enums.PaymentForm;
-import br.com.codebit.codemarket.Entitys.enums.TypeItemTransaction;
+import br.com.codebit.codemarket.entitys.enums.PaymentForm;
+import br.com.codebit.codemarket.entitys.enums.TypeItemTransaction;
 
 import javax.persistence.*;
 import java.io.Serializable;

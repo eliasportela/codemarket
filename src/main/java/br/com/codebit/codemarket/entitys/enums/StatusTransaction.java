@@ -1,14 +1,15 @@
-package br.com.codebit.codemarket.Entitys.enums;
+package br.com.codebit.codemarket.entitys.enums;
 
-public enum PaymentForm {
+public enum StatusTransaction {
 
-    PAYMENT1(1, "Dinheiro"),
-    PAYMENT2(1, "PicPay");
+    OPEN(1, "Aberta"),
+    CLOSED(2, "Fechada"),
+    CANCELED(3, "Cancelada");
 
     private Integer cod;
     private String description;
 
-    PaymentForm(Integer cod, String description) {
+    StatusTransaction(Integer cod, String description) {
         this.cod = cod;
         this.description = description;
     }
@@ -21,13 +22,13 @@ public enum PaymentForm {
         return description;
     }
 
-    public static PaymentForm toEnum(Integer cod) {
+    public static StatusTransaction toEnum(Integer cod) {
 
         if (cod == null) {
             return null;
         }
 
-        for (PaymentForm x : PaymentForm.values()) {
+        for (StatusTransaction x : StatusTransaction.values()) {
             if (cod.equals(x.getCod())) {
                 return x;
             }
@@ -35,5 +36,4 @@ public enum PaymentForm {
 
         throw new IllegalArgumentException("Id inválido: " + cod);
     }
-
 }

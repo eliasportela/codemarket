@@ -1,13 +1,17 @@
-package br.com.codebit.codemarket.Entitys;
+package br.com.codebit.codemarket.entitys;
 
+import br.com.codebit.codemarket.dtos.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Where(clause = "excluded = false")
 public class Product implements Serializable {
 
     @Id
@@ -24,9 +28,24 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private List<ProductPrice> prices;
 
-    public Product(String name, Boolean enabled) {
+    @JsonIgnore
+    @Column(columnDefinition = "boolean default false")
+    private Boolean excluded = false;
+
+    @JsonIgnore
+    private Date excluded_at;
+
+    public Product() {
+    }
+
+    public Product(String name) {
         this.name = name;
-        this.enabled = enabled;
+        enabled = true;
+        excluded = false;
+    }
+
+    public Product(ProductDTO obj) {
+        name = obj.getName();
     }
 
     public Integer getId() {
@@ -59,6 +78,22 @@ public class Product implements Serializable {
 
     public void setPrices(List<ProductPrice> prices) {
         this.prices = prices;
+    }
+
+    public Boolean getExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(Boolean excluded) {
+        this.excluded = excluded;
+    }
+
+    public Date getExcluded_at() {
+        return excluded_at;
+    }
+
+    public void setExcluded_at(Date excluded_at) {
+        this.excluded_at = excluded_at;
     }
 
     @Override
